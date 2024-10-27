@@ -18,7 +18,7 @@ python __init__.py ARGUMENTS(Optionaly)
 options:
   -h, --help            show this help message and exit
   -ep EXPLORER_PATH [EXPLORER_PATH ...], --explorer-path EXPLORER_PATH [EXPLORER_PATH ...]
-                        You can specify the folders to be cleared. Default ['/home/slepming/.cache/', '/home/slepming/Downloads/']
+                        You can specify the folders to be cleared. Default ['$HOME/.cache/', '$HOME/Downloads/']
   -fe FILE_EXCEPTION [FILE_EXCEPTION ...], --file-exception FILE_EXCEPTION [FILE_EXCEPTION ...]
                         You can specify exceptions. Files that cannot be cleared. Default null
   -de DIRECTORY_EXCEPTION [DIRECTORY_EXCEPTION ...], --directory-exception DIRECTORY_EXCEPTION [DIRECTORY_EXCEPTION ...]
