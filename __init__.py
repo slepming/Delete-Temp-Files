@@ -45,13 +45,15 @@ def send_notification(title: str, body: str):
     notification.show()
 
 if __name__ == "__main__":
+    execution_time = 10800
     response_bool = True
     parser = argparse.ArgumentParser(description="Custom args")
     parser.add_argument('-ep', '--explorer-path',nargs='+',type=str, help='You can specify the folders to be cleared. Default %s' % defaultDirectoryPaths)
     parser.add_argument('-fe', '--file-exception', nargs='+', type=str, help='You can specify exceptions. Files that cannot be cleared. Default null')
     parser.add_argument('-de', '--directory-exception', nargs='+', type=str, help='You can specify exceptions. Directories that cannot be cleared. Default null')
     parser.add_argument('-ar', '--allow-response', type=bool, help="You can disable response. Default True")
-    parser.add_argument('-e', '-expired', type=int, help="You can set file expiration times. Default 3(days)")
+    parser.add_argument('-et', '--expired-time', type=int, help="You can set file expiration times. Default 3(days)")
+    parser.add_argument('-te', '--time-execution', type=int, help="How many times will the audit be conducted. Default 10800 sec")
     args = parser.parse_args()
     if args.explorer_path:
         defaultDirectoryPaths.clear()
@@ -65,9 +67,10 @@ if __name__ == "__main__":
             directory_exceptions.append(exception)
     if args.allow_response:
         response_bool = args.allow_response
-    if args.expired:
-        expired_time = args.expired
-            
+    if args.expired_time:
+        expired_time = args.expired_time
+    if args.time_execution:
+            execution_time = args.time_execution
     if len(defaultDirectoryPaths) == 0: 
         raise ValueError("%s equal null, please create list dictionaries" % defaultDirectoryPaths)
     print("Done check files from 'paths'")
@@ -81,22 +84,26 @@ if __name__ == "__main__":
         print(files)
         expired_files:list = []
         for file in files:
-            if file == None: continue
+            if file == None: 
+                continue
             expired_files.append(file)
             if response_bool: 
                 response = input("You want delete this file? (Default: Y). Allowed replies: Y - Yes, N - no, YA - yes all: ")
                 match(response):
-                    case 'N' | 'n': continue
+                    case 'N' | 'n': 
+                        continue
                     case 'Y' | 'y': 
                         if Path.is_dir(file):
                             shutil.rmtree(file)
-                        else: os.remove(file)
+                        else: 
+                            os.remove(file)
                     case 'YA' | 'ya': 
                         response_bool = False
                     case _:
                         if Path.is_dir(file):
                             shutil.rmtree(file)
-                        else: os.remove(file)
+                        else: 
+                            os.remove(file)
             else:
                 if(Path.is_dir(file)):
                    shutil.rmtree(file)
@@ -105,7 +112,7 @@ if __name__ == "__main__":
             print('file checked: %s' % file)
         time.sleep(2)
         send_notification("Report", "Check successful, %s files cleared" % len(expired_files))
-        time.sleep(10800)
+        time.sleep(execution_time)
 
 
 
