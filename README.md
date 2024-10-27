@@ -1,5 +1,18 @@
 # Delete-Temp-Files
 This program clears the specified folders in the arguments when files are overdue for a certain amount of time. Only Linux
+
+
+## Execute
+Download the repository
+```
+git clone https://github.com/slepming/Delete-Temp-Files
+```
+Run the program 
+```
+python __init__.py ARGUMENTS(Optionaly)
+```
+
+
 ## Arguments
 ```
 options:
